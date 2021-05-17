@@ -11,6 +11,10 @@ func SetupRoutes(app *fiber.App) {
 
 	app.Get("/", homeHandler)
 
+	v2 := app.Group("/v2")
+
+	v2.Post("/paystk", paymentRequestHandler)
+
 	app.Use(func(c *fiber.Ctx) error {
 		return c.Status(418).JSON(&fiber.Map{
 			"Message": "🍏 Route not found",
