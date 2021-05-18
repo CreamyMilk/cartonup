@@ -17,7 +17,7 @@ const (
 	port     = "3306" // Default port
 	user     = "root"
 	password = "test_pass"
-	dbname   = "agrodb"
+	dbname   = "icrib_house_db"
 )
 
 // Connect to db

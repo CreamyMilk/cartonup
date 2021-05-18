@@ -14,6 +14,7 @@ func SetupRoutes(app *fiber.App) {
 	v2 := app.Group("/v2")
 
 	v2.Post("/paystk", paymentRequestHandler)
+	v2.Post("/successcall", successfulPaymentHandler)
 
 	app.Use(func(c *fiber.Ctx) error {
 		return c.Status(418).JSON(&fiber.Map{
