@@ -6,13 +6,13 @@ curl --header "Content-Type: application/json"   --request POST   --data '{
   "TransTime": "20200907092133",
   "TransAmount": "6000.00",
   "BusinessShortCode": "4027891",
-  "BillRefNumber": "ALICE FF6",
+  "BillRefNumber": "John#FF6",
   "InvoiceNumber": "",
   "OrgAccountBalance": "30800.00",
   "ThirdPartyTransID": "",
-  "MSISDN": "254723713074",
-  "FirstName": "ALICE",
-  "MiddleName": "MATHENGE",
+  "MSISDN": "254797678252",
+  "FirstName": "JOHn",
+  "MiddleName": "DOE",
   "LastName": ""
 }' http://localhost:1337/v2/successcall
 ```
