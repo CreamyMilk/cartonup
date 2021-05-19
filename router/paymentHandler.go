@@ -1,14 +1,16 @@
 package router
 
 import (
+	"strconv"
+
 	"github.com/CreamyMilk/cartonup/mpeza"
 	"github.com/CreamyMilk/cartonup/tenant"
 	"github.com/gofiber/fiber/v2"
 )
 
 type paymentRequest struct {
-	tenantID int    `json:"tenantID"`
-	phone    string `json:"phone"`
+	TenantID int    `json:"tenantID"`
+	Phone    string `json:"phone"`
 }
 
 func paymentRequestHandler(c *fiber.Ctx) error {
@@ -21,7 +23,7 @@ func paymentRequestHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	tenant := tenant.GetTenantByID(req.tenantID)
+	tenant := tenant.GetTenantByID(req.TenantID)
 	if tenant == nil {
 		return c.JSON(&fiber.Map{
 			"status":  -2,
@@ -30,7 +32,7 @@ func paymentRequestHandler(c *fiber.Ctx) error {
 	}
 
 	//mpesa.SendSTK(req.Mobile
-	checkoutID, err := mpeza.SendSTK(req.phone, string(tenant.AmountDue), tenant.HouseName, string(req.tenantID))
+	checkoutID, err := mpeza.SendSTK(req.Phone, strconv.Itoa(tenant.AmountDue), tenant.HouseName, strconv.Itoa(req.TenantID))
 	if err != nil {
 		return c.JSON(&fiber.Map{
 			"status":  -3,

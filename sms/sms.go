@@ -2,14 +2,12 @@ package sms
 
 import (
 	"fmt"
-
-	"github.com/CreamyMilk/cartonup/callback"
 )
 
-func SendSuccesfulPayment(p *callback.PCallback) error {
+func SendSuccesfulPayment() error {
 	//SMS
-	fmt.Println(`
-Dear %s %s,
+	fmt.Print(`
+Dear ,
 Your transaction of Kshs.${TransAmount} has successfuly
 been credited to ICRIB Account ${BillRefNumber} 
 at ${TransTime}, Ref. Number ${TransID} Thank You.
@@ -17,13 +15,14 @@ at ${TransTime}, Ref. Number ${TransID} Thank You.
 	return nil
 }
 
-func SendNoWalletFound(p *callback.PCallback) error {
-	fmt.Println(`
+func SendNoWalletFound() error {
+	fmt.Print(`
 So my customer hauna walllet kwa system 
 `)
+	return nil
 }
 
 func SendWalletDepositSuccess() error {
 	fmt.Println(`You have deposiyed 394349 to johns account`)
-
+	return nil
 }

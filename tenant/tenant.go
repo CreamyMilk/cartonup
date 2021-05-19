@@ -10,7 +10,7 @@ type Tenant struct {
 	DueMonth   int
 	DueYear    int
 	RentStatus int
-	AmountDue  int64
+	AmountDue  int
 }
 
 func GetTenantByHouseNo(houseNumber string) *Tenant {
@@ -23,9 +23,9 @@ func GetTenantByID(tid int) *Tenant {
 func (t *Tenant) ClearPayment() error {
 	if t.RentStatus == 0 {
 		//Payoff the due for the stated DueID
-		err := databse.DB.Exec(`UPDATE tbl_add_fair
+		_, err := database.DB.Exec(`UPDATE tbl_add_fair
 		SET rent_status=?
-		WHERE rid=?`, 1, c.DueID)
+		WHERE rid=?`, 1, t.DueID)
 		if err != nil {
 			return err
 		}
@@ -33,7 +33,7 @@ func (t *Tenant) ClearPayment() error {
 	//EarlyPayment
 	if t.RentStatus == 1 {
 		//Add a successgfully Paid Record
-		err := database.DB.Exec(`INSERT INTO tbl_add_fail
+		_, err := database.DB.Exec(`INSERT INTO tbl_add_fail
 		userId,y.............
 		`)
 		if err != nil {
