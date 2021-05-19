@@ -25,6 +25,7 @@ type PCallback struct {
 	FirstName         string `json:"FirstName"`
 	MiddleName        string `json:"MiddleName"`
 	LastName          string `json:"LastName"`
+	tAmount           int
 	houseNo           string
 	walletName        string
 }
@@ -48,17 +49,21 @@ func (c *PCallback) isDeposit() bool {
 }
 
 func (c *PCallback) Classify() error {
+	//Soccery to convert payments to ints
+	t, err := strconv.Atoi(strings.Split(c.TransAmount, ".")[0])
+	c.tAmount = t
+	if err != nil {
+		return err
+	}
+
 	if c.isRentPayment() {
+		fmt.Println("This is a Rent Payment")
 		//Get Tenants Details
 		ten := tenant.GetTenantByHouseNo(c.houseNo)
 		if ten == nil {
 			return errors.New("the House must have been closed or is no longer in operation")
 		}
-		transactionAmount, err := strconv.Atoi(c.TransAmount)
-		if err != nil {
-			fmt.Println(err)
-		}
-		if ten.AmountDue != (transactionAmount) {
+		if ten.AmountDue != c.tAmount {
 			//Handle this as a deposit instead
 			//Also rich fellas who decide to overpay we just deposit also
 			return errors.New("so someone managed to send a malicous requst so ")
@@ -78,23 +83,21 @@ func (c *PCallback) Classify() error {
 	}
 
 	if c.isDeposit() {
+		fmt.Println("This is a deposit")
 		userWallet := wallet.GetWalletByName(c.walletName)
 		if userWallet == nil {
 			return sms.SendNoWalletFound()
 		}
-		dAmount, err := strconv.Atoi(c.TransAmount)
-		if err != nil {
-			fmt.Println(err)
-		}
 
-		if userWallet.Deposit(int64(dAmount)) {
+		if userWallet.Deposit(int64(c.tAmount)) {
 			return errors.New("error depositing funds")
 		}
-		err = sms.SendWalletDepositSuccess()
+		err := sms.SendWalletDepositSuccess()
 		if err != nil {
 			fmt.Println(err)
 		}
 		//FCM messages are send by the wallet directly
 	}
+	fmt.Println("Unclassified")
 	return nil
 }
