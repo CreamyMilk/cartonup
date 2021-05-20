@@ -57,14 +57,13 @@ func (c *PCallback) Classify() error {
 	}
 
 	if c.isRentPayment() {
-		fmt.Println("This is a Rent Payment")
-		//Get Tenants Details
 		ten := tenant.GetTenantByHouseNo(c.houseNo)
 		if ten == nil {
 			return errors.New("the House must have been closed or is no longer in operation")
 		}
 		if ten.AmountDue != c.tAmount {
 			//Handle this as a deposit instead
+			//TODOl
 			//Also rich fellas who decide to overpay we just deposit also
 			return errors.New("so someone managed to send a malicous requst so ")
 		}

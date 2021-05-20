@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/CreamyMilk/cartonup/mpeza"
@@ -27,19 +28,19 @@ func paymentRequestHandler(c *fiber.Ctx) error {
 	if tenant == nil {
 		return c.JSON(&fiber.Map{
 			"status":  -2,
-			"message": "Error retriving your accout details.",
+			"message": "Error retriving your account details.",
 		})
 	}
 
-	//mpesa.SendSTK(req.Mobile
-	checkoutID, err := mpeza.SendSTK(req.Phone, strconv.Itoa(tenant.AmountDue), tenant.HouseName, strconv.Itoa(req.TenantID))
+	checkoutID, err := mpeza.SendSTK(req.Phone, strconv.Itoa(tenant.AmountDue), "R#"+tenant.HouseName, strconv.Itoa(req.TenantID))
 	if err != nil {
 		return c.JSON(&fiber.Map{
 			"status":  -3,
 			"message": err.Error(),
 		})
 	}
-
+	//Store this somewhere
+	fmt.Print(checkoutID)
 	return c.JSON(&fiber.Map{
 		"status":     0,
 		"chechoutID": checkoutID,

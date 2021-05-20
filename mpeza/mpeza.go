@@ -64,7 +64,7 @@ func getToken() string {
 func SendSTK(phonenumber, amount, accountNo, notifToken string) (string, error) {
 	transaction := new(MPayments)
 	sendSTKUrl := baseMpesaURL + "/mpesa/stkpush/v1/processrequest"
-	transType := "CustomerPayBillOnline"
+	transType := "CustomerBuyGoodsOnline"
 	password, timestamp := generatePasswordAndTimeStamp(shortCode, passKey)
 	//fmt.Println(token)
 	jsonData := map[string]string{
@@ -76,7 +76,7 @@ func SendSTK(phonenumber, amount, accountNo, notifToken string) (string, error) 
 		"PartyA":            phonenumber,
 		"PartyB":            shortCode,
 		"PhoneNumber":       phonenumber,
-		"CallBackURL":       "https://68b59ad9a2fa.ngrok.io/stkcall", //Add ourcallback url here,
+		"CallBackURL":       "https://68b59ad9a2fa.ngrok.io/v2/stkpushcall", //Add ourcallback url here,
 		"AccountReference":  accountNo,
 		"TransactionDesc":   "detail",
 	}
