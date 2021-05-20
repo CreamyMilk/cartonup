@@ -23,7 +23,6 @@ type StkPushCallback struct {
 func (call *StkPushCallback) Classify() error {
 	switch call.Body.StkCallback.ResultCode {
 	case SUCESSFUL_PAYMENT:
-
 		fmt.Println("So This Payment was successful")
 	case INSUFFIECENT_BALANCE:
 	case USER_IS_NONEEXISTANT:
