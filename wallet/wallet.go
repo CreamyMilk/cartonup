@@ -1,6 +1,10 @@
 package wallet
 
-import "github.com/CreamyMilk/cartonup/database"
+import (
+	"fmt"
+
+	"github.com/CreamyMilk/cartonup/database"
+)
 
 type Wallet struct {
 	name    string
@@ -44,4 +48,13 @@ func (w *Wallet) Deposit(amount int64) bool {
 	w.balance = int64(tempBalance)
 	tx.Commit()
 	return true
+}
+func (w *Wallet) GetBalance() int {
+	tempBalance := 0
+	err := database.DB.QueryRow("SELECT balance FROM wallets_store WHERE wallet_name = ?", w.name).Scan(&tempBalance)
+	if err != nil {
+		fmt.Printf("Unable to get balance coz of error %v", err)
+	}
+
+	return tempBalance
 }

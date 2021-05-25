@@ -51,10 +51,10 @@ func (c *PCallback) isDeposit() bool {
 func (c *PCallback) Classify() error {
 	//Soccery to convert payments to ints
 	t, err := strconv.Atoi(strings.Split(c.TransAmount, ".")[0])
-	c.tAmount = t
 	if err != nil {
 		return err
 	}
+	c.tAmount = t
 
 	if c.isRentPayment() {
 		ten := tenant.GetTenantByHouseNo(c.houseNo)

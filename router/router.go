@@ -17,6 +17,12 @@ func SetupRoutes(app *fiber.App) {
 	v2.Post("/stkpushcall", stkcallbacksHandler)
 	v2.Post("/successcall", successfulPaymentHandler)
 
+	walletsGroup := v2.Group("/wallet")
+
+	walletsGroup.Get("/balance", walletBalanceHandler)
+	walletsGroup.Post("/pay", walletPaymentHandler)
+	walletsGroup.Post("/deposit", depositRequestHandler)
+
 	app.Use(func(c *fiber.Ctx) error {
 		return c.Status(418).JSON(&fiber.Map{
 			"Message": "🍏 Route not found",
