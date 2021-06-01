@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/CreamyMilk/cartonup/mpeza"
+	"github.com/CreamyMilk/cartonup/notification"
 	"github.com/CreamyMilk/cartonup/tenant"
 	"github.com/gofiber/fiber/v2"
 )
@@ -39,8 +40,15 @@ func paymentRequestHandler(c *fiber.Ctx) error {
 			"message": err.Error(),
 		})
 	}
-	//Store this somewhere
-	fmt.Print(checkoutID)
+	s := new(notification.StkStore)
+	s.CheckoutRequestID = checkoutID
+	s.HouseName = tenant.HouseName
+	s.Branch = tenant.BranchID
+	s.PhoneNumber = req.Phone
+	if err = s.Store(); err != nil {
+		fmt.Print(err)
+	}
+
 	return c.JSON(&fiber.Map{
 		"status":     0,
 		"chechoutID": checkoutID,

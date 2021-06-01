@@ -8,7 +8,7 @@ import (
 
 type WalletRequest struct {
 	WalletName  string `json:"walletname"`
-	HouseNumber string `json:"houseNo"`
+	HouseNumber string `json:"houseName"`
 }
 
 func walletPaymentHandler(c *fiber.Ctx) error {

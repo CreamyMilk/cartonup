@@ -19,7 +19,7 @@ func SetupRoutes(app *fiber.App) {
 
 	walletsGroup := v2.Group("/wallet")
 
-	walletsGroup.Get("/balance", walletBalanceHandler)
+	walletsGroup.Post("/balance", walletBalanceHandler)
 	walletsGroup.Post("/pay", walletPaymentHandler)
 	walletsGroup.Post("/deposit", depositRequestHandler)
 
