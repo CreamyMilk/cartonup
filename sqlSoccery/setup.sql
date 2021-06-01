@@ -1,3 +1,8 @@
+-- DELETE FROM tbl_add_fair
+-- WHERE issued_date = 0000-00-00;
+
+-- ALTER TABLE icrib_house_db.tbl_add_fair
+-- MODIFY COLUMN xyear int;
 
 CREATE TABLE wallets_store (
     wid          int NOT NULL AUTO_INCREMENT,
