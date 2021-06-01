@@ -1,6 +1,8 @@
 package notification
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type StkPushCallback struct {
 	ID   string `json:"_id"`
@@ -21,6 +23,9 @@ type StkPushCallback struct {
 }
 
 func (call *StkPushCallback) Classify() error {
+	s := GetsktStoreByCheckID(call.Body.StkCallback.CheckoutRequestID)
+	//We should do look ups here to notify our users
+	fmt.Println(s)
 	switch call.Body.StkCallback.ResultCode {
 	case SUCESSFUL_PAYMENT:
 		fmt.Println("So This Payment was successful")
