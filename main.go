@@ -16,7 +16,7 @@ func main() {
 	app.Use(cors.New())
 	router.SetupRoutes(app)
 	if err := database.Connect(); err != nil {
-		fmt.Printf("DB ERROR %v", err)
+		fmt.Printf("DBERROR %v", err)
 	}
 	defer database.DB.Close()
 	app.Listen(":1337")
